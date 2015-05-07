@@ -1,4 +1,3 @@
-
 public class Question {
 	
 	String id;
@@ -26,24 +25,14 @@ public class Question {
 	}
 
 	public void setSkip(Double d, String string) {
-		// TODO Auto-generated method stub
 		skips.put(d, string);
 	}
 	
 	public void setDefaultSkip(String string) {
-		// TODO Auto-generated method stub
 		skips.setDefault(string);
 	}
 
 	public String getSkip(double d) {
-		// TODO Auto-generated method stub
 		return skips.get(d);
 	}
-	
-
-	
-	
-	
-	
-
 }

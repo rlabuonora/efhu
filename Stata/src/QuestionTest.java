@@ -23,10 +23,17 @@ public class QuestionTest {
 	@Test
 	public void questionsSkipsReturnsCorrectValuesWithOneSkip() {
 		Question q = new Question("06","a16","Pagan algún alquiler por la parte de la vivienda que no pertenece al hogar?");
+		q.setSkip(1.0, "07"); // we can set skips but not get them without default skip set
 		q.setDefaultSkip("08");
-		q.setSkip(1.0, "07");
 		assertEquals(q.getSkip(9.0), "08");
 		assertEquals(q.getSkip(1.0), "07");
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public void questionsSkipsThrowsExceptionWhenDefaultNotSet() {
+		Question q = new Question("06","a16","Pagan algún alquiler por la parte de la vivienda que no pertenece al hogar?");
+		q.setSkip(1.0, "07");
+		q.getSkip(9.0);
 	}
 	
 

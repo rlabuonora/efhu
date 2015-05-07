@@ -22,7 +22,8 @@ public class DefaultHashMapTest {
 	@Test
 	public void changeDefaultChangesNotFoundReturnValue() {
 		 DefaultHashMap<Double, String> dict = new DefaultHashMap<Double, String>("not found");
-	     dict.setDefault("99");
+		 dict.put(2.0, "dos");
+		 dict.setDefault("99");
 	     assertEquals(dict.get(1.0), "99");
 	}
 

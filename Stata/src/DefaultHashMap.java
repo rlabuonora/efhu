@@ -4,10 +4,15 @@ public class DefaultHashMap<K,V> extends HashMap<K,V> {
     
     protected V defaultValue;
     
-
+    public DefaultHashMap(V defaultValue) {
+        this.defaultValue = defaultValue;
+    }
+    
+    public DefaultHashMap() {}
 
     @Override
     public V get(Object k) {
+    	if (defaultValue == null) throw new RuntimeException("Default Value not set");
         return containsKey(k) ? super.get(k) : defaultValue;
     }
 

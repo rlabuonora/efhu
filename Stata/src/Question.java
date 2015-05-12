@@ -9,12 +9,18 @@ public class Question {
 	DefaultHashMap<Double, String> skips = new DefaultHashMap<Double, String>();
 	String flagName;
 	
-	public Question(String id, String text, String var) {
+	public Question(String id, String var, String text) {
 		super();
 		this.id = id;
-		this.text = text;
 		this.var = var;
+		this.text = text;
 		this.flagName = "FL_" + id;
+	}
+	
+	@Override
+	public String toString() {
+		return "Question [id=" + id + ", text=" + text + ", var=" + var
+				+ ", skips=" + skips + "]";
 	}
 
 	public String getId() {
@@ -83,6 +89,12 @@ public class Question {
 		double respuesta =  Data.getNum(getIndex(), obs);
 		return respuesta;
 	}
-		
+
+	public String next(int obs) {
+		double response = getResponse(obs);
+		return getSkip(response);
+	}
+	
+	
 	
 }

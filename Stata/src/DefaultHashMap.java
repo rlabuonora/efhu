@@ -25,7 +25,7 @@ public class DefaultHashMap<K,V> extends HashMap<K,V> {
 		StringBuilder sb = new StringBuilder();
 		sb.append("-1 => " + defaultValue + "\n");
 		for (K key: super.keySet()) {
-			sb.append(key + " => " + super.get(key) + "\n");
+			sb.append(", " + key + " => " + super.get(key) + "\n");
 		}
 		return sb.toString();
 	}

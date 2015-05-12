@@ -2,6 +2,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import org.junit.Test;
 
@@ -70,7 +71,27 @@ public class StataInterfaceTest {
 		assertEquals(firstVar, saltos.get(74)[1]);
 	}
 	
-
+	@Test
+	public void initializeQuestionsFromFiles() {
+		String sFile = "c:\\stata\\saltos.csv";
+		String qFile = "c:\\stata\\preguntas.csv";
+		StataInterface si = new StataInterface();
+		HashMap<String, Question> questionData = si.initializeQuestions(qFile, sFile);
+		//StdOut.println(questionData);
+		assertEquals(52, questionData.size());
+	}
+	
+	@Test
+	public void nextReturnsCorrectValues() {
+		String sFile = "c:\\stata\\saltos.csv";
+		String qFile = "c:\\stata\\preguntas.csv";
+		StataInterface si = new StataInterface();
+		HashMap<String, Question> questionData = si.initializeQuestions(qFile, sFile);
+		Question q = questionData.get("01");
+		assertEquals(q.getId(), "01");
+		assertEquals(q.getText(), "\"Desde qué año residen en esta vivienda?\"");
+		
+	}
 	
 	
 

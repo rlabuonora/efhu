@@ -21,8 +21,12 @@ public class DefaultHashMap<K,V> extends HashMap<K,V> {
 		this.defaultValue = defaultValue;
 	}
 
-	public static void main(String[] args)
-	{
-		
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("-1 => " + defaultValue + "\n");
+		for (K key: super.keySet()) {
+			sb.append(key + " => " + super.get(key) + "\n");
+		}
+		return sb.toString();
 	}
 }

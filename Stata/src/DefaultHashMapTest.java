@@ -41,5 +41,13 @@ public class DefaultHashMapTest {
 		 dict.setDefault("99");
 	     assertEquals(dict.get(1.0), "99");
 	}
+	
+	@Test
+	public void defaultHashMapPrettyPrint() {
+		 DefaultHashMap<Double, String> dict = new DefaultHashMap<Double, String>();
+		 dict.put(2.0, "dos");
+		 dict.setDefault("99");
+	     StdOut.println(dict);
+	}
 
 }

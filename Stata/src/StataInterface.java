@@ -1,8 +1,13 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import static org.junit.Assert.*;
+import org.junit.Test;
+
 
 import com.stata.sfi.Data;
 import com.stata.sfi.SFIToolkit;
+
+
 
 
 public class StataInterface {
@@ -38,10 +43,7 @@ public class StataInterface {
 		int obs = Integer.parseInt(args[0]);
 		double expectedResponse = Double.parseDouble(args[1]);
     	double response = q.getResponse(obs);
-    	if (Math.abs(expectedResponse-response) > 0.0000001) {
-    		SFIToolkit.error("Failed getResponseTest");
-    		return 198;
-    	} 
+    	assertEquals(expectedResponse, response, 0.0000001);
     	return 0;
 	}
 	
@@ -49,14 +51,11 @@ public class StataInterface {
 		int obs = Integer.parseInt(args[0]);
 		double expectedResponse = Data.getMissingValue();
     	double response = q.getResponse(obs);
-    	if (Math.abs(expectedResponse-response) > 0.0000001) {
-    		SFIToolkit.error("Failed getMissingResponseTest");
-    		return 198;
-    	} 
+    	assertEquals(expectedResponse, response, 0.0000001);
     	return 0;
 	}
 	
-
+	
 	
 	
 	public ArrayList<String[]> parseFile(String file) {

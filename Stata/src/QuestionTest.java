@@ -36,7 +36,11 @@ public class QuestionTest {
 		q.getSkip(9.0);
 	}
 	
-
+	@Test
+	public void createFlagForQuestionSix() {
+		Question q = new Question("06","a16","Pagan algún alquiler por la parte de la vivienda que no pertenece al hogar?");
+		//q.createFlag();
+	}
 
 
 }

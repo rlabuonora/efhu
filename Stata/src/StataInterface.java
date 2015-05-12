@@ -1,75 +1,9 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-
-import com.stata.sfi.Data;
-import com.stata.sfi.SFIToolkit;
-
-
-
 
 public class StataInterface {
 
-	static Question q;
 	
-	
-	public static int createQuestionTest(String[] args) {
-		q = new Question(args[0], args[1], args[2]);
-		return 0;
-	}
-	
-	public static int createFlagTest(String[] args)  {
-    	
-    	int status = q.createFlag();
-    	return status;
-	}
-	
-	public static int setFlagTest(String[] args)  {
-		int obs = Integer.parseInt(args[0]);
-		int flag = Integer.parseInt(args[1]);
-    	int status = q.setFlag(obs, flag);
-    	return status;
-	}
-	
-	public static int setFlagToMissingTest(String[] args)  {
-		int obs = Integer.parseInt(args[0]);
-    	int status = q.setFlagToMissing(obs);
-    	return status;
-	}
-	
-	public static int getResponseTest(String[] args)  {
-		int obs = Integer.parseInt(args[0]);
-		double expectedResponse = Double.parseDouble(args[1]);
-    	double response = q.getResponse(obs);
-    	assertEquals(expectedResponse, response, 0.0000001);
-    	return 0;	
-	}
-	
-	public static int getMissingResponseTest(String[] args)  {
-		int obs = Integer.parseInt(args[0]);
-		double expectedResponse = Data.getMissingValue();
-    	double response = q.getResponse(obs);
-    	assertEquals(expectedResponse, response, 0.0000001);
-    	return 0;
-	}
-	
-	@SuppressWarnings("deprecation")
-	public static int nextTest(String[] args) {
-		String sFile = "c:\\stata\\saltos.csv";
-		String qFile = "c:\\stata\\preguntas.csv";
-		StataInterface si = new StataInterface();
-		HashMap<String, Question> questionData = si.initializeQuestions(qFile, sFile);
-		String id = args[0];
-		int obs = Integer.parseInt(args[1]);
-		String expected = args[2];
-		Question q = questionData.get(id);
-		assertEquals(q.next(obs), expected);
-		return 0;
-	}
 	
 	public HashMap<String, Question> initializeQuestions(String questionsFile, String skipsFile) {
 		ArrayList<String[]> questionArray = parseFile(questionsFile);

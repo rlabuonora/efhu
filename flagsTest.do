@@ -18,10 +18,10 @@ sysdir set PERSONAL "U:\graficos\proyectos\EFHU2015\stataJava\Stata\bin\"
 ** Test for the Question class that require STATA runtime
 
 * create Question 6
-javacall StataInterface createQuestionTest, args("06" "Pagan algún alquiler por la parte de la vivienda que no pertenece al hogar?" "a16" )
+javacall StataInterface createQuestionTest, args("06" "a16" "Pagan algún alquiler por la parte de la vivienda que no pertenece al hogar?" )
 
 * Create Flag
-javacall StataInterface createFlagTest, args("06" "a16" "Pagan algún alquiler por la parte de la vivienda que no pertenece al hogar?")
+javacall StataInterface createFlagTest, args("06")
 assert FL_06 == 0
 
 * Set Flag
@@ -36,6 +36,7 @@ assert FL_06 == . in 3
 * Get Response 
 javacall StataInterface getResponseTest, args("9" "2")
 javacall StataInterface getMissingResponseTest, args("10")
-
-
 */
+
+* Next
+javacall StataInterface nextTest, args("01" "1" "02")

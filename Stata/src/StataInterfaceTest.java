@@ -1,97 +1,74 @@
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
-import org.junit.Test;
+import com.stata.sfi.Data;
 
 
 public class StataInterfaceTest {
 
-	@Test
-	public void parseQuestionsFileReturnsFiftyTwoLines() {
-		StataInterface si = new StataInterface();
-		String file = "c:\\stata\\preguntas.csv";
-		ArrayList<String[]> questions = si.parseFile(file);
-		assertEquals(52, questions.size());
-	}
-		
-	@Test
-	public void parseQuestionsFirstLineIsFirstLineOfFile() {
-		StataInterface si = new StataInterface();
-		String file = "c:\\stata\\preguntas.csv";
-		ArrayList<String[]> questions = si.parseFile(file);
-		String firstId = "01";
-		String firstVar = "a11";
-		assertEquals(firstId, questions.get(0)[0]);
-		assertEquals(firstVar, questions.get(0)[1]);
+	private static Question q;
+	private static HashMap<String, Question> questionData;
+
+	
+	public static int initializeQuestion(String[] args) {
+		q = new Question(args[0], args[1], args[2]);
+		return 0;
 	}
 	
-	
-	@Test
-	public void parseQuestionsLastLineIsFirstLineOfFile() {
+	public static int initializeInterface(String[] args ) {
+		String qFile = args[0]; //"c:\\stata\\preguntas.csv";
+		String sFile = args[1]; //"c:\\stata\\saltos.csv";
 		StataInterface si = new StataInterface();
-		String file = "c:\\stata\\preguntas.csv";
-		ArrayList<String[]> questions = si.parseFile(file);
-		String firstId = "58";
-		String firstVar = "a158";
-		assertEquals(firstId, questions.get(51)[0]);
-		assertEquals(firstVar, questions.get(51)[1]);
+		questionData = si.initializeQuestions(qFile, sFile);
+		return 0;
 	}
 	
-	@Test
-	public void parseSaltosReturnsSeventyTwoLines() {
-		StataInterface si = new StataInterface();
-		String file = "c:\\stata\\saltos.csv";
-		ArrayList<String[]> saltos = si.parseFile(file);
-		assertEquals(75, saltos.size());
+	public static int createFlagTest(String[] args)  {
+    	
+    	int status = q.createFlag();
+    	return status;
 	}
 	
-	
-	@Test
-	public void parseSaltosLastLineIsFirstLineOfFile() {
-		StataInterface si = new StataInterface();
-		String file = "c:\\stata\\saltos.csv";
-		ArrayList<String[]> saltos = si.parseFile(file);
-		String firstId = "01";
-		String firstVar = "-1";
-		assertEquals(firstId, saltos.get(0)[0]);
-		assertEquals(firstVar, saltos.get(0)[1]);
+	public static int setFlagTest(String[] args)  {
+		int obs = Integer.parseInt(args[0]);
+		int flag = Integer.parseInt(args[1]);
+    	int status = q.setFlag(obs, flag);
+    	return status;
 	}
 	
-	@Test
-	public void parseSaltosLastLineIsLastLineOfFile() {
-		StataInterface si = new StataInterface();
-		String file = "c:\\stata\\saltos.csv";
-		ArrayList<String[]> saltos = si.parseFile(file);
-		String firstId = "58";
-		String firstVar = "-1";
-		assertEquals(firstId, saltos.get(74)[0]);
-		assertEquals(firstVar, saltos.get(74)[1]);
+	public static int setFlagToMissingTest(String[] args)  {
+		int obs = Integer.parseInt(args[0]);
+    	int status = q.setFlagToMissing(obs);
+    	return status;
 	}
 	
-	@Test
-	public void initializeQuestionsFromFiles() {
-		String sFile = "c:\\stata\\saltos.csv";
-		String qFile = "c:\\stata\\preguntas.csv";
-		StataInterface si = new StataInterface();
-		HashMap<String, Question> questionData = si.initializeQuestions(qFile, sFile);
-		//StdOut.println(questionData);
-		assertEquals(52, questionData.size());
+	public static int getResponseTest(String[] args)  {
+		int obs = Integer.parseInt(args[0]);
+		double expectedResponse = Double.parseDouble(args[1]);
+    	double response = q.getResponse(obs);
+    	assertEquals(expectedResponse, response, 0.0000001);
+    	return 0;	
 	}
 	
-	@Test
-	public void nextReturnsCorrectValues() {
-		String sFile = "c:\\stata\\saltos.csv";
-		String qFile = "c:\\stata\\preguntas.csv";
-		StataInterface si = new StataInterface();
-		HashMap<String, Question> questionData = si.initializeQuestions(qFile, sFile);
-		Question q = questionData.get("01");
-		assertEquals(q.getId(), "01");
-		assertEquals(q.getText(), "\"Desde qué año residen en esta vivienda?\"");
-		
+	public static int getMissingResponseTest(String[] args)  {
+		int obs = Integer.parseInt(args[0]);
+		double expectedResponse = Data.getMissingValue();
+    	double response = q.getResponse(obs);
+    	assertEquals(expectedResponse, response, 0.0000001);
+    	return 0;
 	}
+	
+	@SuppressWarnings("deprecation")
+	public static int nextTest(String[] args) {
+		String id = args[0];
+		int obs = Integer.parseInt(args[1]);
+		String expected = args[2];
+		Question q = questionData.get(id);
+		assertEquals(q.next(obs), expected);
+		return 0;
+	}
+
 	
 	
 

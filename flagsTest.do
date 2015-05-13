@@ -11,7 +11,7 @@
 */
 global ruta "U:\graficos\proyectos\EFHU2015\"
 use "$ruta\A1\EFHUModA1.dta", clear
-describe a11
+*describe FL*
 
 sysdir set PERSONAL "U:\graficos\proyectos\EFHU2015\stataJava\Stata\bin\"
 
@@ -53,5 +53,7 @@ javacall StataInterfaceTest nextTest, args("03" "2" "04")
 
 * Observación 2 pasa de 17 a 51:
 javacall StataInterfaceTest nextTest, args("17" "2" "51")
+
+
 
 

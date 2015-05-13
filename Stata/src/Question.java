@@ -15,6 +15,7 @@ public class Question {
 		this.var = var;
 		this.text = text;
 		this.flagName = "FL_" + id;
+		
 	}
 	
 	@Override
@@ -51,7 +52,10 @@ public class Question {
 	// creates the flag for this question and sets it to 0
 		
 		int status = Data.addVarInt(flagName);
-		if (status != 0) throw new RuntimeException("Cannot create" + flagName);
+		if (status != 0) {
+			SFIToolkit.error("Could not create " + flagName );
+			return(198);
+		}
 		int index = getFlagIndex();
 		if (index == 0) {
 			SFIToolkit.error("Could not create " + flagName );
@@ -81,6 +85,7 @@ public class Question {
 	public int setFlagToMissing(int obs) {
 		// TODO Auto-generated method stub
 		int status = setFlag(obs, Data.getMissingValue());
+		if (status != 0) SFIToolkit.error("Cannot set flag " + flagName + "\n");
 		return status;
 	}
 

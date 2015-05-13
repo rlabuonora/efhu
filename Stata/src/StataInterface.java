@@ -1,10 +1,36 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.stata.sfi.Data;
+
 public class StataInterface {
 
-	
-	
+	public static int fillFlags(String[] args) {
+		String initial;
+		StataInterface si = new StataInterface(); 
+		HashMap<String, Question> questions = si.initializeQuestions(args[0], args[1]);
+		// initialize Flags
+		
+		for (String qId:questions.keySet()) {
+			Question q = questions.get(qId);
+			q.createFlag();
+		}
+		
+		// Fill in Flags
+		int N = Data.getObsCount(); 
+		for (int i = 1; i <= N; i++) {
+		     initial = "01";
+		     Question q = questions.get(initial);
+		     
+		     q.setFlagToMissing(i);
+		     while (!q.next(i).equals("-1")) {
+		   	   q = questions.get(q.next(i));
+		   	   q.setFlagToMissing(i); 
+		   }
+		}
+		return 0;
+	}
+
 	public HashMap<String, Question> initializeQuestions(String questionsFile, String skipsFile) {
 		ArrayList<String[]> questionArray = parseFile(questionsFile);
 		ArrayList<String[]> skipsArray = parseFile(skipsFile);
@@ -26,7 +52,7 @@ public class StataInterface {
 					// do the casting her
 					val = Double.parseDouble(s[1]);
 					siguiente = s[2];
-					if (Math.abs(val+1) < 0.00001) question.setDefaultSkip(siguiente);
+					if (Math.abs(1+val) < 0.00001) question.setDefaultSkip(siguiente);
 					else                           question.setSkip(val, siguiente);
 				}
 			}

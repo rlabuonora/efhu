@@ -25,7 +25,6 @@ public class StataInterfaceTest {
 	}
 	
 	public static int createFlagTest(String[] args)  {
-    	
     	int status = q.createFlag();
     	return status;
 	}
@@ -69,7 +68,11 @@ public class StataInterfaceTest {
 		return 0;
 	}
 
-	
+	public static int fillFlagsTest(String[] args)  {
+		StataInterface.fillFlags(args);
+		
+    	return 0;
+	}
 	
 
 }

@@ -1,4 +1,6 @@
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import com.stata.sfi.Data;
@@ -32,8 +34,15 @@ public class StataInterface {
 	}
 
 	public HashMap<String, Question> initializeQuestions(String questionsFile, String skipsFile) {
-		ArrayList<String[]> questionArray = parseFile(questionsFile);
-		ArrayList<String[]> skipsArray = parseFile(skipsFile);
+		ArrayList<String[]> questionArray = new ArrayList<>() ;
+		ArrayList<String[]> skipsArray = new ArrayList<>();
+		try {
+			questionArray = parseFile(questionsFile);
+			skipsArray = parseFile(skipsFile);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		HashMap<String, Question> questions = new HashMap<>();
 		String idQ, var, txt, idS, siguiente;
 		double val;
@@ -62,22 +71,30 @@ public class StataInterface {
 	}
 	
 	
-	public ArrayList<String[]> parseFile(String file) {
+	public ArrayList<String[]> parseFile(String file) throws IOException {
 		ArrayList<String[]> lines = new ArrayList<String[]>();
 		In in = new In(file);
 		// remove headers and determine number of columns+		
 		int cols = in.readLine().split(",").length;
 		
-		String line;
+		String[] line;
 		while (in.hasNextLine()) {
-			line = in.readLine(); 
+			line = in.readLine().split(",");
+			validateLine(cols, line);
 			String[] a = new String[cols];
 			for (int i = 0; i < cols; i++) {
-			a[i] = line.split(",")[i].trim();
+			a[i] = line[i].trim();
 			}
 			lines.add(a);
 		}
 		return lines;
+	}
+
+	private void validateLine(int cols, String[] line) throws IOException {
+		if (line.length < cols) throw new IOException("La linea " + Arrays.toString(line) + 
+														"columnas de menos.");
+		else if (line.length > cols) throw new IOException("La linea " + Arrays.toString(line) + 
+				"columnas de más.");
 	}
 
 }

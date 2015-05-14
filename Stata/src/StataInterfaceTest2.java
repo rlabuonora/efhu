@@ -1,5 +1,6 @@
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -10,15 +11,30 @@ public class StataInterfaceTest2 {
 
 	
 	@Test
-	public void parseQuestionsFileReturnsFiftyTwoLines() {
+	public void parseQuestionsFileReturnsFiftyTwoLines() throws IOException {
 		StataInterface si = new StataInterface();
 		String file = "c:\\stata\\preguntas.csv";
 		ArrayList<String[]> questions = si.parseFile(file);
 		assertEquals(52, questions.size());
 	}
+	
+	@Test(expected=IOException.class)
+	public void parseQuestionsFileThrowsExceptionWithShortLine() throws IOException {
+		StataInterface si = new StataInterface();
+		String file = "c:\\stata\\preguntasError.csv";
+		ArrayList<String[]> questions = si.parseFile(file);
+	}
+	
+	@Test(expected=IOException.class)
+	public void parseQuestionsFileThrowsExceptionWithLongLine() throws IOException {
+		StataInterface si = new StataInterface();
+		String file = "c:\\stata\\preguntasError2.csv";
+		ArrayList<String[]> questions = si.parseFile(file);
+	}
+	
 		
 	@Test
-	public void parseQuestionsFirstLineIsFirstLineOfFile() {
+	public void parseQuestionsFirstLineIsFirstLineOfFile() throws IOException {
 		StataInterface si = new StataInterface();
 		String file = "c:\\stata\\preguntas.csv";
 		ArrayList<String[]> questions = si.parseFile(file);
@@ -30,7 +46,7 @@ public class StataInterfaceTest2 {
 	
 	
 	@Test
-	public void parseQuestionsLastLineIsFirstLineOfFile() {
+	public void parseQuestionsLastLineIsFirstLineOfFile() throws IOException {
 		StataInterface si = new StataInterface();
 		String file = "c:\\stata\\preguntas.csv";
 		ArrayList<String[]> questions = si.parseFile(file);
@@ -41,7 +57,7 @@ public class StataInterfaceTest2 {
 	}
 	
 	@Test
-	public void parseSaltosReturnsSeventyTwoLines() {
+	public void parseSaltosReturnsSeventyTwoLines() throws IOException {
 		StataInterface si = new StataInterface();
 		String file = "c:\\stata\\saltos.csv";
 		ArrayList<String[]> saltos = si.parseFile(file);
@@ -50,7 +66,7 @@ public class StataInterfaceTest2 {
 	
 	
 	@Test
-	public void parseSaltosLastLineIsFirstLineOfFile() {
+	public void parseSaltosLastLineIsFirstLineOfFile() throws IOException {
 		StataInterface si = new StataInterface();
 		String file = "c:\\stata\\saltos.csv";
 		ArrayList<String[]> saltos = si.parseFile(file);
@@ -61,7 +77,7 @@ public class StataInterfaceTest2 {
 	}
 	
 	@Test
-	public void parseSaltosLastLineIsLastLineOfFile() {
+	public void parseSaltosLastLineIsLastLineOfFile() throws IOException {
 		StataInterface si = new StataInterface();
 		String file = "c:\\stata\\saltos.csv";
 		ArrayList<String[]> saltos = si.parseFile(file);

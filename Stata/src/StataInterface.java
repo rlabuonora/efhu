@@ -12,6 +12,7 @@ public class StataInterface {
 
 	public static int fillFlags(String[] args) {
 		String initial;
+		Question nextQ;
 		StataInterface si = new StataInterface(); 
 		HashMap<String, Question> questions = new HashMap<String, Question>();
 		try {
@@ -21,24 +22,30 @@ public class StataInterface {
 			//e.printStackTrace();
 			SFIToolkit.error(e.getMessage());
 		}
+
 		// initialize Flags
-		
+
 		for (String qId:questions.keySet()) {
 			Question q = questions.get(qId);
 			q.createFlag();
 		}
-		
+
 		// Fill in Flags
 		int N = Data.getObsCount(); 
 		for (int i = 1; i <= N; i++) {
-		     initial = "01";
-		     Question q = questions.get(initial);
-		     
-		     q.setFlagToMissing(i);
-		     while (!q.next(i).equals("-1")) {
-		   	   q = questions.get(q.next(i));
-		   	   q.setFlagToMissing(i); 
-		   }
+			initial = "01";
+			Question q = questions.get(initial);   
+			q.setFlagToMissing(i);
+			while (!q.next(i).equals("-1")) {
+				nextQ = questions.get(q.next(i));
+				if (nextQ == null) {
+					SFIToolkit.error("No existe pregunta " + q.next(i));
+					return 198;
+				} else {
+					q = nextQ;
+					q.setFlagToMissing(i);
+				}
+			}
 		}
 		return 0;
 	}

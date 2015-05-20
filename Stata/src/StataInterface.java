@@ -8,6 +8,8 @@ import com.stata.sfi.SFIToolkit;
 
 public class StataInterface {
 
+	private static final int DEFAULT_SKIP = -7;
+
 	public static int fillFlags(String[] args) {
 		String initial;
 		StataInterface si = new StataInterface(); 
@@ -61,10 +63,10 @@ public class StataInterface {
 			for (String[] s:skipsArray) {
 				idS = s[0];
 				if (idS.equals(idQ)) {
-					// do the casting her
+					// do the casting here
 					val = Double.parseDouble(s[1]);
 					siguiente = s[2];
-					if (Math.abs(1+val) < 0.00001) question.setDefaultSkip(siguiente);
+					if (Math.abs(-DEFAULT_SKIP+val) < 0.00001) question.setDefaultSkip(siguiente);
 					else                           question.setSkip(val, siguiente);
 				}
 			}

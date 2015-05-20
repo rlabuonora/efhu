@@ -4,13 +4,21 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import com.stata.sfi.Data;
+import com.stata.sfi.SFIToolkit;
 
 public class StataInterface {
 
 	public static int fillFlags(String[] args) {
 		String initial;
 		StataInterface si = new StataInterface(); 
-		HashMap<String, Question> questions = si.initializeQuestions(args[0], args[1]);
+		HashMap<String, Question> questions = new HashMap<String, Question>();
+		try {
+			questions = si.initializeQuestions(args[0], args[1]);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			SFIToolkit.error(e.getMessage());
+		}
 		// initialize Flags
 		
 		for (String qId:questions.keySet()) {
@@ -33,16 +41,11 @@ public class StataInterface {
 		return 0;
 	}
 
-	public HashMap<String, Question> initializeQuestions(String questionsFile, String skipsFile) {
+	public HashMap<String, Question> initializeQuestions(String questionsFile, String skipsFile) throws IOException {
 		ArrayList<String[]> questionArray = new ArrayList<>() ;
 		ArrayList<String[]> skipsArray = new ArrayList<>();
-		try {
-			questionArray = parseFile(questionsFile);
-			skipsArray = parseFile(skipsFile);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		questionArray = parseFile(questionsFile);
+		skipsArray = parseFile(skipsFile);
 		HashMap<String, Question> questions = new HashMap<>();
 		String idQ, var, txt, idS, siguiente;
 		double val;
@@ -92,9 +95,9 @@ public class StataInterface {
 
 	private void validateLine(int cols, String[] line) throws IOException {
 		if (line.length < cols) throw new IOException("La linea " + Arrays.toString(line) + 
-														"columnas de menos.");
+														" tiene columnas de menos.\n");
 		else if (line.length > cols) throw new IOException("La linea " + Arrays.toString(line) + 
-				"columnas de más.");
+				" tiene columnas de más.\n");
 	}
 
 }

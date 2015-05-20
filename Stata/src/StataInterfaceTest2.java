@@ -88,7 +88,7 @@ public class StataInterfaceTest2 {
 	}
 	
 	@Test
-	public void initializeQuestionsFromFiles() {
+	public void initializeQuestionsFromFiles() throws IOException {
 		String sFile = "c:\\stata\\saltos.csv";
 		String qFile = "c:\\stata\\preguntas.csv";
 		StataInterface si = new StataInterface();
@@ -98,7 +98,7 @@ public class StataInterfaceTest2 {
 	}
 	
 	@Test
-	public void nextReturnsCorrectValues() {
+	public void nextReturnsCorrectValues() throws IOException {
 		String sFile = "c:\\stata\\saltos.csv";
 		String qFile = "c:\\stata\\preguntas.csv";
 		StataInterface si = new StataInterface();

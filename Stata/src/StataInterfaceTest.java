@@ -1,5 +1,6 @@
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import com.stata.sfi.Data;
@@ -16,7 +17,7 @@ public class StataInterfaceTest {
 		return 0;
 	}
 	
-	public static int initializeInterface(String[] args ) {
+	public static int initializeInterface(String[] args ) throws IOException {
 		String qFile = args[0]; //"c:\\stata\\preguntas.csv";
 		String sFile = args[1]; //"c:\\stata\\saltos.csv";
 		StataInterface si = new StataInterface();

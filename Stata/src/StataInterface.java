@@ -63,7 +63,8 @@ public class StataInterface {
 		// loop through questions
 		for (String[] q:questionArray) {
 			idQ = q[0];
-			var = q[1];  // ojo con el orden !!! armonizar!!
+			var = q[1];  
+			validateVariableExists(var);
 			txt = q[2];
 			Question question = new Question(idQ, var, txt);
 			// loop through skips
@@ -92,7 +93,7 @@ public class StataInterface {
 		String[] line;
 		while (in.hasNextLine()) {
 			line = in.readLine().split(",");
-			validateLine(cols, line);
+			validateLineLength(cols, line);
 			String[] a = new String[cols];
 			for (int i = 0; i < cols; i++) {
 			a[i] = line[i].trim();
@@ -102,11 +103,19 @@ public class StataInterface {
 		return lines;
 	}
 
-	private void validateLine(int cols, String[] line) throws IOException {
+	/* Methods To Validate Input from the files */
+	
+	private static void validateLineLength(int cols, String[] line) throws IOException {
 		if (line.length < cols) throw new IOException("La linea " + Arrays.toString(line) + 
 														" tiene columnas de menos.\n");
 		else if (line.length > cols) throw new IOException("La linea " + Arrays.toString(line) + 
 				" tiene columnas de más.\n");
+	}
+	
+	private static void validateVariableExists(String var)  {
+		int status = Data.getVarIndex(var);
+		if (status == 0) SFIToolkit.error("Variable " + var + " no existe");
+		
 	}
 
 }

@@ -113,8 +113,9 @@ public class StataInterface {
 	}
 	
 	private static void validateVariableExists(String var)  {
-		int status = Data.getVarIndex(var);
-		if (status == 0) SFIToolkit.error("Variable " + var + " no existe");
+		int varIdx = Data.getVarIndex(var);
+		int varCnt = Data.getVarCount();
+		if (varIdx > varCnt) SFIToolkit.error("Variable " + var + " no existe\n");
 		
 	}
 

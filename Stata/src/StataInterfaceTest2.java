@@ -97,7 +97,7 @@ public class StataInterfaceTest2 {
 	}
 	
 
-	
+	/*
 	@Test
 	public void nextReturnsCorrectValues() throws IOException {
 		String sFile = "c:\\stata\\saltos.csv";
@@ -108,5 +108,6 @@ public class StataInterfaceTest2 {
 		assertEquals(q.getId(), "01");
 		assertEquals(q.getText(), "\"Desde qué año residen en esta vivienda?\"");	
 	}
+	*/
 	
 }
